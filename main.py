@@ -2,9 +2,21 @@ import tkinter as tk
 from tkinter import font
 import requests
 from PIL import Image, ImageTk
+import time
+import os
 
 HEIGHT = 500
 WIDTH = 800
+
+def update(ind):
+    frame = frames[ind]
+    ind += 1
+    label.configure(image=frame)
+    root.after(120, update, ind)
+
+def activate_eegg():
+    # background_image = frames
+    root.after(0, update, 0) #cycle through frames
 
 def get_weather(city):
     try:
@@ -28,13 +40,14 @@ def get_weather(city):
     label['text'] = final_str
     print(weather)
 
-
 root = tk.Tk()
+
+frames = [tk.PhotoImage(file='sonic.gif',format = 'gif -index %i' %(i)) for i in range(70)]
 
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
 
-background_image = tk.PhotoImage(file='c:/Users/nuajd15/Desktop/VS Workspace/Weather GUI/background.png')
+background_image = tk.PhotoImage(file='background.png')
 background_label = tk.Label(root, image=background_image)
 background_label.place(relwidth=1, relheight=1)
 
@@ -46,6 +59,9 @@ entry.place(relwidth=0.65, relheight=1)
 
 button = tk.Button(frame, text="Get Weather", bg="gray", activebackground="orange", command=lambda: get_weather(entry.get()))
 button.place(relx=0.7, relwidth=0.3, relheight=1)
+
+eegg_button = tk.Button(frame, bg="yellow", command=activate_eegg)
+eegg_button.place(anchor='se', relwidth=0.1, relheight=0.1)
 
 lower_frame = tk.Frame(root, bg="#b3cce6", bd=5)
 lower_frame.place(relx=0.5, rely=0.25, relwidth=0.75, relheight=0.6, anchor="n")
