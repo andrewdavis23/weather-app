@@ -15,8 +15,7 @@ def update(ind):
     root.after(120, update, ind)
 
 def activate_eegg():
-    # background_image = frames
-    root.after(0, update, 0) #cycle through frames
+    root.after(0, update, 0) 
 
 def get_weather(city):
     try:
